@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Started White</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=My+Soul&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        
+        .container {
+            position: relative;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 5%;
+        }
+        
+        .content {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .text-section {
+            display: none;
+        }
+        
+        .main-title {
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 900;
+            line-height: 0.85;
+            letter-spacing: -0.03em;
+            margin-bottom: 0;
+            text-transform: uppercase;
+        }
+        
+        .subtitle {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            margin-bottom: 0.3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+        }
+        
+        .subtitle-line2 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 400;
+            line-height: 1.1;
+            text-transform: uppercase;
+            letter-spacing: 0.01em;
+            display: flex;
+            align-items: baseline;
+            gap: 20px;
+        }
+        
+        .subtitle-script {
+            font-family: 'My Soul', cursive;
+            font-style: normal;
+            text-transform: none;
+            font-size: clamp(3rem, 6vw, 5rem);
+            letter-spacing: 0;
+            color: #fff;
+        }
+        
+        .canvas-section {
+            position: relative;
+            z-index: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .photoshop-interface {
+            background: #2d2d2d;
+            border-radius: 8px;
+            padding: 0;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
+            transform: rotate(-5deg);
+            transition: all 0.6s ease;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            min-width: 600px;
+            min-height: 480px;
+        }
+        
+        .photoshop-interface:hover {
+            transform: rotate(0deg) scale(1.02);
+            box-shadow: 0 35px 70px rgba(1, 179, 255, 0.3);
+        }
+        
+        .ps-title-bar {
+            background: #1e1e1e;
+            height: 35px;
+            border-radius: 8px 8px 0 0;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            border-bottom: 1px solid #404040;
+        }
+        
+        .ps-controls {
+            display: flex;
+            gap: 6px;
+            margin-right: auto;
+        }
+        
+        .ps-control {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+        }
+        
+        .ps-control.close { background: #ff5f57; }
+        .ps-control.minimize { background: #ffbd2e; }
+        .ps-control.maximize { background: #28ca42; }
+        
+        .ps-title {
+            color: #cccccc;
+            font-size: 13px;
+            font-weight: 400;
+            margin: 0 auto;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .ps-menu-bar {
+            background: #393939;
+            height: 28px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 20px;
+        }
+        
+        .ps-menu-item {
+            color: #cccccc;
+            font-size: 12px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 3px;
+            transition: all 0.2s ease;
+        }
+        
+        .ps-menu-item:hover {
+            background: #4a4a4a;
+        }
+        
+        .ps-workspace {
+            display: flex;
+            flex: 1;
+            background: #535353;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .ps-toolbar {
+            background: #393939;
+            width: 60px;
+            border-right: 1px solid #404040;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 12px 0;
+            gap: 8px;
+        }
+        
+        .ps-tool {
+            width: 40px;
+            height: 40px;
+            background: #4a4a4a;
+            border: 1px solid #555;
+            border-radius: 4px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            color: #ccc;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            position: relative;
+        }
+        
+        .ps-tool:hover {
+            background: #5a5a5a;
+            border-color: #666;
+        }
+        
+        .ps-tool.active {
+            background: #0078d4;
+            border-color: #106ebe;
+            color: white;
+        }
+        
+        .ps-tool svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+        
+        .ps-main-area {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ps-options-bar {
+            background: #454545;
+            height: 32px;
+            border-bottom: 1px solid #404040;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            gap: 15px;
+        }
+        
+        .ps-option {
+            color: #cccccc;
+            font-size: 11px;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+        
+        .ps-canvas-container {
+            flex: 1;
+            display: flex;
+            position: relative;
+        }
+        
+        .ps-canvas-area {
+            flex: 1;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .ps-panels {
+            width: 280px;
+            background: #393939;
+            border-left: 1px solid #404040;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .ps-panel {
+            border-bottom: 1px solid #404040;
+        }
+        
+        .ps-panel-header {
+            background: #343434;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            padding: 0 12px;
+            border-bottom: 1px solid #404040;
+        }
+        
+        .ps-panel-title {
+            color: #cccccc;
+            font-size: 11px;
+            font-weight: 600;
+            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+            text-transform: uppercase;
+        }
+        
+        .ps-panel-content {
+            padding: 8px;
+        }
+        
+        .canvas {
+            width: 320px;
+            height: 240px;
+            background: #ffffff;
+            border: 2px solid #999;
+            border-radius: 4px;
+            position: relative;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
+            overflow: hidden;
+            cursor: crosshair;
+            transition: all 0.8s ease;
+        }
+        
+        .canvas::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: #ffffff;
+            z-index: 1;
+            transition: all 1.2s ease;
+        }
+        
+        .canvas::after {
+            content: 'Click to start creating...';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 14px;
+            color: #999;
+            font-style: italic;
+            z-index: 3;
+            transition: all 0.5s ease;
+        }
+        
+        .design-story {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 2;
+            opacity: 0;
+            transition: all 1.5s ease;
+        }
+        
+        .story-step {
+            position: absolute;
+            opacity: 0;
+            transition: all 1.5s ease;
+        }
+        
+        .story-step.active {
+            opacity: 1;
+        }
+        
+        /* Step 1: Sketch - Light pencil strokes */
+        .story-step-1 {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .sketch-line {
+            position: absolute;
+            height: 2px;
+            background: #ddd;
+            opacity: 0;
+            transform-origin: left;
+            animation: drawLine 1.5s ease-out forwards;
+        }
+        
+        .sketch-line-1 {
+            top: 40%;
+            left: 15%;
+            width: 0;
+            border-radius: 1px;
+            animation-delay: 0.5s;
+        }
+        
+        .sketch-line-2 {
+            top: 45%;
+            left: 20%;
+            width: 0;
+            border-radius: 1px;
+            animation-delay: 1s;
+        }
+        
+        .sketch-line-3 {
+            top: 50%;
+            left: 25%;
+            width: 0;
+            border-radius: 1px;
+            animation-delay: 1.5s;
+        }
+        
+        .sketch-circle {
+            position: absolute;
+            top: 25%;
+            right: 30%;
+            width: 50px;
+            height: 50px;
+            border: 2px solid #ccc;
+            border-radius: 50%;
+            opacity: 0;
+            stroke-dasharray: 157;
+            stroke-dashoffset: 157;
+            animation: drawCircle 2s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        
+        .sketch-box {
+            position: absolute;
+            bottom: 30%;
+            left: 40%;
+            width: 60px;
+            height: 40px;
+            border: 2px solid #ccc;
+            opacity: 0;
+            transform: scale(0);
+            animation: appearSketch 1s ease-out forwards;
+            animation-delay: 1.8s;
+        }
+        
+        @keyframes drawLine {
+            0% {
+                width: 0;
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                width: 70px;
+                opacity: 0.7;
+            }
+        }
+        
+        @keyframes drawCircle {
+            0% {
+                opacity: 0;
+                stroke-dashoffset: 157;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.7;
+                stroke-dashoffset: 0;
+            }
+        }
+        
+        @keyframes appearSketch {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 0.7;
+            }
+        }
+        
+        /* Step 2: Wireframe - Structure and hierarchy */
+        .story-step-2 {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+        }
+        
+        .wireframe-header {
+            position: absolute;
+            top: 15%;
+            left: 15%;
+            right: 15%;
+            height: 20px;
+            background: #999;
+            opacity: 0;
+            transform: scaleX(0);
+            transform-origin: left;
+            animation: buildWireframe 1.2s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+        
+        .wireframe-content {
+            position: absolute;
+            top: 45%;
+            left: 20%;
+            width: 40%;
+            height: 30%;
+            border: 2px solid #888;
+            opacity: 0;
+            transform: scale(0.8);
+            animation: buildWireframe 1s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        
+        .wireframe-sidebar {
+            position: absolute;
+            top: 45%;
+            right: 15%;
+            width: 20%;
+            height: 30%;
+            background: #bbb;
+            opacity: 0;
+            transform: translateX(20px);
+            animation: slideIn 1s ease-out forwards;
+            animation-delay: 1.3s;
+        }
+        
+        .wireframe-text {
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            background: #ddd;
+            opacity: 0;
+            animation: fadeIn 0.8s ease-out forwards;
+        }
+        
+        .wireframe-text:nth-child(1) {
+            top: 25%;
+            animation-delay: 1.8s;
+        }
+        
+        .wireframe-text:nth-child(2) {
+            top: 40%;
+            width: 80%;
+            animation-delay: 2s;
+        }
+        
+        .wireframe-text:nth-child(3) {
+            top: 55%;
+            width: 60%;
+            animation-delay: 2.2s;
+        }
+        
+        @keyframes buildWireframe {
+            0% {
+                opacity: 0;
+                transform: scaleX(0);
+            }
+            100% {
+                opacity: 0.8;
+                transform: scaleX(1);
+            }
+        }
+        
+        @keyframes slideIn {
+            0% {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            100% {
+                opacity: 0.8;
+                transform: translateX(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 0.6;
+            }
+        }
+        
+        /* Step 3: Final design - Colors and branding */
+        .story-step-3 {
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 1.5s ease;
+        }
+        
+        .story-step-3.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+        
+        .design-header {
+            position: absolute;
+            top: 12%;
+            left: 12%;
+            right: 12%;
+            height: 25px;
+            background: linear-gradient(135deg, #0004DB, #2B55FF);
+            border-radius: 4px;
+            opacity: 0;
+            transform: translateY(-10px);
+            animation: finalizeElement 1s ease-out forwards;
+            animation-delay: 0.5s;
+        }
+        
+        .design-content {
+            position: absolute;
+            top: 45%;
+            left: 18%;
+            right: 35%;
+            height: 35%;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            border-radius: 6px;
+            border: 1px solid #dee2e6;
+            opacity: 0;
+            transform: translateY(10px);
+            animation: finalizeElement 1.2s ease-out forwards;
+            animation-delay: 0.8s;
+        }
+        
+        .design-sidebar {
+            position: absolute;
+            top: 45%;
+            right: 12%;
+            width: 18%;
+            height: 35%;
+            background: linear-gradient(135deg, #01B3FF, #2B55FF);
+            border-radius: 6px;
+            opacity: 0;
+            transform: translateX(15px);
+            animation: finalizeElement 1s ease-out forwards;
+            animation-delay: 1.1s;
+        }
+        
+        .design-accent {
+            position: absolute;
+            bottom: 15%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 8px;
+            background: linear-gradient(135deg, #8B01E8, #2B55FF);
+            border-radius: 4px;
+            opacity: 0;
+            animation: finalizeElement 0.8s ease-out forwards;
+            animation-delay: 1.4s;
+        }
+        
+        .final-text {
+            position: absolute;
+            bottom: 25%;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            color: #2c3e50;
+            text-align: center;
+            line-height: 1.3;
+            opacity: 0;
+            transform: translateX(-50%) translateY(10px);
+            animation: textAppear 1.5s ease-out forwards;
+            animation-delay: 2s;
+        }
+        
+        @keyframes finalizeElement {
+            0% {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes textAppear {
+            0% {
+                opacity: 0;
+                transform: translateX(-50%) translateY(10px);
+            }
+            100% {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+        
+        @keyframes drawSVGCircle {
+            0% {
+                stroke-dashoffset: 144;
+                opacity: 0;
+            }
+            20% {
+                opacity: 1;
+            }
+            100% {
+                stroke-dashoffset: 0;
+                opacity: 0.7;
+            }
+        }
+        
+        .canvas.storytelling::before {
+            opacity: 0;
+        }
+        
+        .canvas.storytelling::after {
+            opacity: 0;
+        }
+        
+        .canvas.storytelling .design-story {
+            opacity: 1;
+        }
+        
+        @keyframes float1 {
+            0%, 100% { transform: translateY(0px) translateX(0px); }
+            50% { transform: translateY(-10px) translateX(5px); }
+        }
+        
+        @keyframes float2 {
+            0%, 100% { transform: rotate(45deg) translateY(0px); }
+            50% { transform: rotate(45deg) translateY(-8px); }
+        }
+        
+        @keyframes float3 {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-6px); }
+        }
+        
+        .canvas-info {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 12px;
+            border-radius: 6px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        
+        .canvas-info-text {
+            font-size: 11px;
+            color: #ccc;
+            margin-bottom: 4px;
+        }
+        
+        .canvas-size {
+            font-size: 10px;
+            color: #999;
+        }
+        
+        .design-layers {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            min-width: 140px;
+        }
+        
+        .layer-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: #fff;
+            cursor: pointer;
+            padding: 6px 8px;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+        
+        .layer-item:hover {
+            background: rgba(1, 179, 255, 0.2);
+        }
+        
+        .layer-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .layer-icon {
+            width: 18px;
+            height: 18px;
+            background: #01B3FF;
+            border-radius: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .gradient-effects {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+            overflow: hidden;
+            border-radius: 8px;
+        }
+        
+        .gradient-1 {
+            position: absolute;
+            width: 200px;
+            height: 200px;
+            background: radial-gradient(circle, #8B01E8 0%, transparent 70%);
+            top: -50px;
+            right: -50px;
+            filter: blur(40px);
+            opacity: 0.3;
+            animation: float1 6s ease-in-out infinite;
+        }
+        
+        .gradient-2 {
+            position: absolute;
+            width: 150px;
+            height: 150px;
+            background: radial-gradient(circle, #01B3FF 0%, transparent 70%);
+            bottom: -30px;
+            left: -30px;
+            filter: blur(35px);
+            opacity: 0.4;
+            animation: float2 8s ease-in-out infinite;
+        }
+        
+        .diagonal-lines {
+            position: absolute;
+            bottom: 10%;
+            right: 10%;
+            width: 400px;
+            height: 200px;
+            background: linear-gradient(45deg, transparent 48%, #01B3FF 49%, #01B3FF 51%, transparent 52%);
+            background-size: 20px 20px;
+            opacity: 0.2;
+            animation: slideLines 10s linear infinite;
+        }
+        
+        @keyframes slideLines {
+            0% { transform: translateX(0) translateY(0); }
+            100% { transform: translateX(-40px) translateY(-40px); }
+        }
+        
+        @media (max-width: 1200px) {
+            .content {
+                grid-template-columns: 1.1fr 0.9fr;
+                gap: 4rem;
+            }
+            
+            .main-title {
+                font-size: clamp(5rem, 10vw, 10rem);
+            }
+            
+            .subtitle, .subtitle-line2 {
+                font-size: clamp(2rem, 4.5vw, 3.5rem);
+            }
+            
+            .subtitle-script {
+                font-size: clamp(2.5rem, 5.5vw, 4.5rem);
+            }
+            
+            .ps-toolbar {
+                width: 50px;
+            }
+            
+            .ps-tool {
+                width: 35px;
+                height: 35px;
+            }
+            
+            .ps-tool svg {
+                width: 16px;
+                height: 16px;
+            }
+            
+            .canvas {
+                width: 220px;
+                height: 170px;
+            }
+            
+            .design-layers {
+                min-width: 120px;
+                padding: 12px;
+            }
+        }
+        
+        @media (max-width: 900px) {
+            .content {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+            
+            .main-title {
+                font-size: clamp(4rem, 12vw, 8rem);
+                margin-bottom: 1.5rem;
+            }
+            
+            .subtitle, .subtitle-line2 {
+                font-size: clamp(1.8rem, 6vw, 3rem);
+            }
+            
+            .subtitle-script {
+                font-size: clamp(2.2rem, 7vw, 3.8rem);
+            }
+            
+            .canvas-section {
+                height: 450px;
+                order: -1;
+                margin-bottom: 2rem;
+            }
+            
+            .ps-workspace {
+                flex-direction: row;
+            }
+            
+            .ps-toolbar {
+                width: 45px;
+                padding: 8px 0;
+                gap: 6px;
+            }
+            
+            .ps-tool {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .ps-tool svg {
+                width: 14px;
+                height: 14px;
+            }
+            
+            .canvas {
+                width: 200px;
+                height: 150px;
+            }
+            
+            .design-layers {
+                min-width: 110px;
+                padding: 10px;
+            }
+            
+            .diagonal-lines {
+                width: 200px;
+                height: 100px;
+                bottom: 5%;
+                right: 5%;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .main-title {
+                font-size: clamp(3.5rem, 15vw, 6rem);
+                line-height: 0.9;
+            }
+            
+            .subtitle, .subtitle-line2 {
+                font-size: clamp(1.5rem, 8vw, 2.5rem);
+            }
+            
+            .subtitle-script {
+                font-size: clamp(1.8rem, 9vw, 3rem);
+            }
+            
+            .subtitle-line2 {
+                flex-direction: column;
+                gap: 0;
+                align-items: center;
+            }
+            
+            .canvas-section {
+                height: 400px;
+            }
+            
+            .ps-toolbar {
+                width: 40px;
+                padding: 6px 0;
+                gap: 4px;
+            }
+            
+            .ps-tool {
+                width: 28px;
+                height: 28px;
+            }
+            
+            .ps-tool svg {
+                width: 12px;
+                height: 12px;
+            }
+            
+            .canvas {
+                width: 180px;
+                height: 130px;
+            }
+            
+            .design-layers, .canvas-info {
+                display: none;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .main-title {
+                font-size: clamp(2.8rem, 18vw, 5rem);
+            }
+            
+            .subtitle, .subtitle-line2 {
+                font-size: clamp(1.2rem, 10vw, 2rem);
+            }
+            
+            .subtitle-script {
+                font-size: clamp(1.5rem, 12vw, 2.5rem);
+            }
+            
+            .ps-workspace {
+                min-height: 180px;
+            }
+            
+            .ps-toolbar {
+                width: 35px;
+                padding: 4px 0;
+                gap: 3px;
+            }
+            
+            .ps-tool {
+                width: 25px;
+                height: 25px;
+            }
+            
+            .ps-tool svg {
+                width: 11px;
+                height: 11px;
+            }
+            
+            .canvas {
+                width: 240px;
+                height: 140px;
+            }
+            
+            .ps-canvas-area {
+                padding: 8px;
+            }
+            
+            .final-text {
+                font-size: 12px !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <div class="text-section">
+                <h1 class="main-title">STARTED<br>WHITE</h1>
+            </div>
+            
+            <div class="canvas-section">
+                <div class="photoshop-interface" onclick="openCreativeProcess()">
+                    <div class="ps-title-bar">
+                        <div class="ps-controls">
+                            <div class="ps-control close"></div>
+                            <div class="ps-control minimize"></div>
+                            <div class="ps-control maximize"></div>
+                        </div>
+                        <div class="ps-title">Started White @ 100% (RGB/8)</div>
+                    </div>
+                    
+                    <div class="ps-workspace">
+                        <div class="ps-toolbar">
+                            <div class="ps-tool active" title="Move Tool (V)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M13,6V11H18V7.75L22.25,12L18,16.25V13H13V18H16.25L12,22.25L7.75,18H11V13H6V16.25L1.75,12L6,7.75V11H11V6H7.75L12,1.75L16.25,6H13Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Marquee Tool (M)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3,3H9V5H5V9H3V3M15,3H21V9H19V5H15V3M19,15H21V21H15V19H19V15M5,15H9V21H3V15H5V19H3V15Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Lasso Tool (L)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M3.5,17.5C4.36,18.36 5.64,18.36 6.5,17.5C7.36,16.64 7.36,15.36 6.5,14.5C5.64,13.64 4.36,13.64 3.5,14.5C2.64,15.36 2.64,16.64 3.5,17.5M8.91,13.09L15.5,6.5L17.5,8.5L10.91,15.09L8.91,13.09M12,2L13.09,3.09L22,12L13.09,20.91L12,22L10.91,20.91L2,12L10.91,3.09L12,2Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Magic Wand (W)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7,1L9.5,6L15,4L11.5,9L17,7L13.5,12L19,10L15.5,15H22V17H15.5L19,22L13.5,20L17,15L11.5,17L15,12L9.5,14L13,9L7,11L10.5,6L5,8L8.5,3L3,5L6.5,0L7,1M2,18H9V20H2V18Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Crop Tool (C)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M7,17V1H5V5H1V7H5V17A2,2 0 0,0 7,19H17V23H19V19H23V17H19V7A2,2 0 0,0 17,5H7V17M17,7V17H7V7H17Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Eyedropper (I)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C10.73,4 9.5,4.4 8.47,5.09L9.88,6.5C10.54,6.19 11.26,6 12,6C14.67,6 16.88,7.88 17.42,10.42L9.88,17.96C9.58,17.66 9.34,17.29 9.17,16.89L7.76,18.3C8.22,19 8.84,19.59 9.57,20.03L10.97,21.43L15.54,16.86L19.35,10.04Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Healing Brush (J)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Brush Tool (B)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Clone Stamp (S)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22V16H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V16H2V14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,12A0.5,0.5 0 0,0 7,12.5A0.5,0.5 0 0,0 7.5,13A0.5,0.5 0 0,0 8,12.5A0.5,0.5 0 0,0 7.5,12M16.5,12A0.5,0.5 0 0,0 16,12.5A0.5,0.5 0 0,0 16.5,13A0.5,0.5 0 0,0 17,12.5A0.5,0.5 0 0,0 16.5,12Z"/>
+                                </svg>
+                            </div>
+                            <div class="ps-tool" title="Eraser Tool (E)">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z"/>
+                                </svg>
+                            </div>
+                        </div>
+                        
+                        <div class="ps-canvas-area">
+                            <div class="canvas" id="mainCanvas" onclick="startStoryTelling()">
+                                <div class="design-story">
+                                    <div class="story-step story-step-1">
+                                        <!-- Sketch phase -->
+                                        <div class="sketch-line sketch-line-1"></div>
+                                        <div class="sketch-line sketch-line-2"></div>
+                                        <div class="sketch-line sketch-line-3"></div>
+                                        <svg class="sketch-circle" style="position: absolute; top: 25%; right: 30%; width: 50px; height: 50px;">
+                                            <circle cx="25" cy="25" r="23" fill="none" stroke="#ccc" stroke-width="2" 
+                                                    style="stroke-dasharray: 144; stroke-dashoffset: 144; animation: drawSVGCircle 2s ease-out forwards; animation-delay: 0.8s;"/>
+                                        </svg>
+                                        <div class="sketch-box"></div>
+                                    </div>
+                                    <div class="story-step story-step-2">
+                                        <!-- Wireframe phase -->
+                                        <div class="wireframe-header"></div>
+                                        <div class="wireframe-content">
+                                            <div class="wireframe-text"></div>
+                                            <div class="wireframe-text"></div>
+                                            <div class="wireframe-text"></div>
+                                        </div>
+                                        <div class="wireframe-sidebar"></div>
+                                    </div>
+                                    <div class="story-step story-step-3">
+                                        <!-- Final design phase -->
+                                        <div class="design-header"></div>
+                                        <div class="design-content"></div>
+                                        <div class="design-sidebar"></div>
+                                        <div class="design-accent"></div>
+                                        <div class="final-text">Like any canvas,<br>it all started white</div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="canvas-info">
+                                <div class="canvas-info-text">New Document</div>
+                                <div class="canvas-size">1920 × 1080 px</div>
+                            </div>
+                            
+                            <div class="design-layers">
+                                <div class="layer-item">
+                                    <div class="layer-icon">S</div>
+                                    <span>Shapes</span>
+                                </div>
+                                <div class="layer-item">
+                                    <div class="layer-icon">C</div>
+                                    <span>Colors</span>
+                                </div>
+                                <div class="layer-item">
+                                    <div class="layer-icon">T</div>
+                                    <span>Typography</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="gradient-effects">
+                        <div class="gradient-1"></div>
+                        <div class="gradient-2"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        let storyActive = false;
+        let storyStep = 0;
+        
+        function startStoryTelling() {
+            if (storyActive) return;
+            
+            const canvas = document.getElementById('mainCanvas');
+            canvas.classList.add('storytelling');
+            storyActive = true;
+            storyStep = 0;
+            
+            // Show story steps sequentially - realistic design process
+            setTimeout(() => showStoryStep(1), 500);  // Sketch phase - rough ideas
+            setTimeout(() => showStoryStep(2), 4000); // Wireframe phase - structure
+            setTimeout(() => showStoryStep(3), 7500); // Final design - polished result
+            
+            // Reset after story completes
+            setTimeout(() => {
+                resetCanvas();
+            }, 13000);
+        }
+        
+        function showStoryStep(step) {
+            const steps = document.querySelectorAll('.story-step');
+            steps.forEach(s => s.classList.remove('active'));
+            
+            const currentStep = document.querySelector(`.story-step-${step}`);
+            if (currentStep) {
+                currentStep.classList.add('active');
+                storyStep = step;
+            }
+        }
+        
+        function resetCanvas() {
+            const canvas = document.getElementById('mainCanvas');
+            canvas.classList.remove('storytelling');
+            
+            // Reset all steps
+            const steps = document.querySelectorAll('.story-step');
+            steps.forEach(s => s.classList.remove('active'));
+            
+            storyActive = false;
+            storyStep = 0;
+        }
+        
+        function openCreativeProcess() {
+            if (!storyActive) {
+                startStoryTelling();
+            }
+        }
+        
+        // Reset canvas to blank state on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const canvas = document.getElementById('mainCanvas');
+            if (canvas) {
+                canvas.onclick = function(e) {
+                    if (!storyActive) {
+                        startStoryTelling();
+                    }
+                };
+            }
+        });
+    </script>
+</body>
+</html>
