@@ -1,1248 +1,1062 @@
 <!DOCTYPE html>
 <html lang="pt">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Started White</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&family=My+Soul&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background: #000;
-            color: #fff;
-            overflow-x: hidden;
-            min-height: 100vh;
-        }
-        
-        .container {
-            position: relative;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 2rem 5%;
-        }
-        
-        .content {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        
-        .text-section {
-            display: none;
-        }
-        
-        .main-title {
-            font-size: clamp(4rem, 10vw, 8rem);
-            font-weight: 900;
-            line-height: 0.85;
-            letter-spacing: -0.03em;
-            margin-bottom: 0;
-            text-transform: uppercase;
-        }
-        
-        .subtitle {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 400;
-            line-height: 1.1;
-            margin-bottom: 0.3rem;
-            text-transform: uppercase;
-            letter-spacing: 0.01em;
-        }
-        
-        .subtitle-line2 {
-            font-size: clamp(2.5rem, 5vw, 4rem);
-            font-weight: 400;
-            line-height: 1.1;
-            text-transform: uppercase;
-            letter-spacing: 0.01em;
-            display: flex;
-            align-items: baseline;
-            gap: 20px;
-        }
-        
-        .subtitle-script {
-            font-family: 'My Soul', cursive;
-            font-style: normal;
-            text-transform: none;
-            font-size: clamp(3rem, 6vw, 5rem);
-            letter-spacing: 0;
-            color: #fff;
-        }
-        
-        .canvas-section {
-            position: relative;
-            z-index: 1;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        
-        .photoshop-interface {
-            background: #2d2d2d;
-            border-radius: 8px;
-            padding: 0;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.8);
-            transform: rotate(-5deg);
-            transition: all 0.6s ease;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            min-width: 600px;
-            min-height: 480px;
-        }
-        
-        .photoshop-interface:hover {
-            transform: rotate(0deg) scale(1.02);
-            box-shadow: 0 35px 70px rgba(1, 179, 255, 0.3);
-        }
-        
-        .ps-title-bar {
-            background: #1e1e1e;
-            height: 35px;
-            border-radius: 8px 8px 0 0;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            border-bottom: 1px solid #404040;
-        }
-        
-        .ps-controls {
-            display: flex;
-            gap: 6px;
-            margin-right: auto;
-        }
-        
-        .ps-control {
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-        }
-        
-        .ps-control.close { background: #ff5f57; }
-        .ps-control.minimize { background: #ffbd2e; }
-        .ps-control.maximize { background: #28ca42; }
-        
-        .ps-title {
-            color: #cccccc;
-            font-size: 13px;
-            font-weight: 400;
-            margin: 0 auto;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        .ps-menu-bar {
-            background: #393939;
-            height: 28px;
-            border-bottom: 1px solid #404040;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 20px;
-        }
-        
-        .ps-menu-item {
-            color: #cccccc;
-            font-size: 12px;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            cursor: pointer;
-            padding: 4px 8px;
-            border-radius: 3px;
-            transition: all 0.2s ease;
-        }
-        
-        .ps-menu-item:hover {
-            background: #4a4a4a;
-        }
-        
-        .ps-workspace {
-            display: flex;
-            flex: 1;
-            background: #535353;
-            border-radius: 0 0 8px 8px;
-        }
-        
-        .ps-toolbar {
-            background: #393939;
-            width: 60px;
-            border-right: 1px solid #404040;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 12px 0;
-            gap: 8px;
-        }
-        
-        .ps-tool {
-            width: 40px;
-            height: 40px;
-            background: #4a4a4a;
-            border: 1px solid #555;
-            border-radius: 4px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 14px;
-            color: #ccc;
-            font-weight: 600;
-            transition: all 0.2s ease;
-            position: relative;
-        }
-        
-        .ps-tool:hover {
-            background: #5a5a5a;
-            border-color: #666;
-        }
-        
-        .ps-tool.active {
-            background: #0078d4;
-            border-color: #106ebe;
-            color: white;
-        }
-        
-        .ps-tool svg {
-            width: 18px;
-            height: 18px;
-            fill: currentColor;
-        }
-        
-        .ps-main-area {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .ps-options-bar {
-            background: #454545;
-            height: 32px;
-            border-bottom: 1px solid #404040;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            gap: 15px;
-        }
-        
-        .ps-option {
-            color: #cccccc;
-            font-size: 11px;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-        }
-        
-        .ps-canvas-container {
-            flex: 1;
-            display: flex;
-            position: relative;
-        }
-        
-        .ps-canvas-area {
-            flex: 1;
-            padding: 20px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            position: relative;
-        }
-        
-        .ps-panels {
-            width: 280px;
-            background: #393939;
-            border-left: 1px solid #404040;
-            display: flex;
-            flex-direction: column;
-        }
-        
-        .ps-panel {
-            border-bottom: 1px solid #404040;
-        }
-        
-        .ps-panel-header {
-            background: #343434;
-            height: 28px;
-            display: flex;
-            align-items: center;
-            padding: 0 12px;
-            border-bottom: 1px solid #404040;
-        }
-        
-        .ps-panel-title {
-            color: #cccccc;
-            font-size: 11px;
-            font-weight: 600;
-            font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-            text-transform: uppercase;
-        }
-        
-        .ps-panel-content {
-            padding: 8px;
-        }
-        
-        .canvas {
-            width: 320px;
-            height: 240px;
-            background: #ffffff;
-            border: 2px solid #999;
-            border-radius: 4px;
-            position: relative;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.4);
-            overflow: hidden;
-            cursor: crosshair;
-            transition: all 0.8s ease;
-        }
-        
-        .canvas::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #ffffff;
-            z-index: 1;
-            transition: all 1.2s ease;
-        }
-        
-        .canvas::after {
-            content: 'Click to start creating...';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 14px;
-            color: #999;
-            font-style: italic;
-            z-index: 3;
-            transition: all 0.5s ease;
-        }
-        
-        .design-story {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 2;
-            opacity: 0;
-            transition: all 1.5s ease;
-        }
-        
-        .story-step {
-            position: absolute;
-            opacity: 0;
-            transition: all 1.5s ease;
-        }
-        
-        .story-step.active {
-            opacity: 1;
-        }
-        
-        /* Step 1: Sketch - Light pencil strokes */
-        .story-step-1 {
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-        
-        .sketch-line {
-            position: absolute;
-            height: 2px;
-            background: #ddd;
-            opacity: 0;
-            transform-origin: left;
-            animation: drawLine 1.5s ease-out forwards;
-        }
-        
-        .sketch-line-1 {
-            top: 40%;
-            left: 15%;
-            width: 0;
-            border-radius: 1px;
-            animation-delay: 0.5s;
-        }
-        
-        .sketch-line-2 {
-            top: 45%;
-            left: 20%;
-            width: 0;
-            border-radius: 1px;
-            animation-delay: 1s;
-        }
-        
-        .sketch-line-3 {
-            top: 50%;
-            left: 25%;
-            width: 0;
-            border-radius: 1px;
-            animation-delay: 1.5s;
-        }
-        
-        .sketch-circle {
-            position: absolute;
-            top: 25%;
-            right: 30%;
-            width: 50px;
-            height: 50px;
-            border: 2px solid #ccc;
-            border-radius: 50%;
-            opacity: 0;
-            stroke-dasharray: 157;
-            stroke-dashoffset: 157;
-            animation: drawCircle 2s ease-out forwards;
-            animation-delay: 0.8s;
-        }
-        
-        .sketch-box {
-            position: absolute;
-            bottom: 30%;
-            left: 40%;
-            width: 60px;
-            height: 40px;
-            border: 2px solid #ccc;
-            opacity: 0;
-            transform: scale(0);
-            animation: appearSketch 1s ease-out forwards;
-            animation-delay: 1.8s;
-        }
-        
-        @keyframes drawLine {
-            0% {
-                width: 0;
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                width: 70px;
-                opacity: 0.7;
-            }
-        }
-        
-        @keyframes drawCircle {
-            0% {
-                opacity: 0;
-                stroke-dashoffset: 157;
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                opacity: 0.7;
-                stroke-dashoffset: 0;
-            }
-        }
-        
-        @keyframes appearSketch {
-            0% {
-                transform: scale(0);
-                opacity: 0;
-            }
-            50% {
-                opacity: 0.7;
-            }
-            100% {
-                transform: scale(1);
-                opacity: 0.7;
-            }
-        }
-        
-        /* Step 2: Wireframe - Structure and hierarchy */
-        .story-step-2 {
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-        }
-        
-        .wireframe-header {
-            position: absolute;
-            top: 15%;
-            left: 15%;
-            right: 15%;
-            height: 20px;
-            background: #999;
-            opacity: 0;
-            transform: scaleX(0);
-            transform-origin: left;
-            animation: buildWireframe 1.2s ease-out forwards;
-            animation-delay: 0.3s;
-        }
-        
-        .wireframe-content {
-            position: absolute;
-            top: 45%;
-            left: 20%;
-            width: 40%;
-            height: 30%;
-            border: 2px solid #888;
-            opacity: 0;
-            transform: scale(0.8);
-            animation: buildWireframe 1s ease-out forwards;
-            animation-delay: 0.8s;
-        }
-        
-        .wireframe-sidebar {
-            position: absolute;
-            top: 45%;
-            right: 15%;
-            width: 20%;
-            height: 30%;
-            background: #bbb;
-            opacity: 0;
-            transform: translateX(20px);
-            animation: slideIn 1s ease-out forwards;
-            animation-delay: 1.3s;
-        }
-        
-        .wireframe-text {
-            position: absolute;
-            width: 100%;
-            height: 4px;
-            background: #ddd;
-            opacity: 0;
-            animation: fadeIn 0.8s ease-out forwards;
-        }
-        
-        .wireframe-text:nth-child(1) {
-            top: 25%;
-            animation-delay: 1.8s;
-        }
-        
-        .wireframe-text:nth-child(2) {
-            top: 40%;
-            width: 80%;
-            animation-delay: 2s;
-        }
-        
-        .wireframe-text:nth-child(3) {
-            top: 55%;
-            width: 60%;
-            animation-delay: 2.2s;
-        }
-        
-        @keyframes buildWireframe {
-            0% {
-                opacity: 0;
-                transform: scaleX(0);
-            }
-            100% {
-                opacity: 0.8;
-                transform: scaleX(1);
-            }
-        }
-        
-        @keyframes slideIn {
-            0% {
-                opacity: 0;
-                transform: translateX(20px);
-            }
-            100% {
-                opacity: 0.8;
-                transform: translateX(0);
-            }
-        }
-        
-        @keyframes fadeIn {
-            0% {
-                opacity: 0;
-            }
-            100% {
-                opacity: 0.6;
-            }
-        }
-        
-        /* Step 3: Final design - Colors and branding */
-        .story-step-3 {
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            opacity: 0;
-            transform: scale(0.95);
-            transition: all 1.5s ease;
-        }
-        
-        .story-step-3.active {
-            opacity: 1;
-            transform: scale(1);
-        }
-        
-        .design-header {
-            position: absolute;
-            top: 12%;
-            left: 12%;
-            right: 12%;
-            height: 25px;
-            background: linear-gradient(135deg, #0004DB, #2B55FF);
-            border-radius: 4px;
-            opacity: 0;
-            transform: translateY(-10px);
-            animation: finalizeElement 1s ease-out forwards;
-            animation-delay: 0.5s;
-        }
-        
-        .design-content {
-            position: absolute;
-            top: 45%;
-            left: 18%;
-            right: 35%;
-            height: 35%;
-            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
-            border-radius: 6px;
-            border: 1px solid #dee2e6;
-            opacity: 0;
-            transform: translateY(10px);
-            animation: finalizeElement 1.2s ease-out forwards;
-            animation-delay: 0.8s;
-        }
-        
-        .design-sidebar {
-            position: absolute;
-            top: 45%;
-            right: 12%;
-            width: 18%;
-            height: 35%;
-            background: linear-gradient(135deg, #01B3FF, #2B55FF);
-            border-radius: 6px;
-            opacity: 0;
-            transform: translateX(15px);
-            animation: finalizeElement 1s ease-out forwards;
-            animation-delay: 1.1s;
-        }
-        
-        .design-accent {
-            position: absolute;
-            bottom: 15%;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 40px;
-            height: 8px;
-            background: linear-gradient(135deg, #8B01E8, #2B55FF);
-            border-radius: 4px;
-            opacity: 0;
-            animation: finalizeElement 0.8s ease-out forwards;
-            animation-delay: 1.4s;
-        }
-        
-        .final-text {
-            position: absolute;
-            bottom: 25%;
-            left: 50%;
-            transform: translateX(-50%);
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            color: #2c3e50;
-            text-align: center;
-            line-height: 1.3;
-            opacity: 0;
-            transform: translateX(-50%) translateY(10px);
-            animation: textAppear 1.5s ease-out forwards;
-            animation-delay: 2s;
-        }
-        
-        @keyframes finalizeElement {
-            0% {
-                opacity: 0;
-                transform: translateY(-10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-        
-        @keyframes textAppear {
-            0% {
-                opacity: 0;
-                transform: translateX(-50%) translateY(10px);
-            }
-            100% {
-                opacity: 1;
-                transform: translateX(-50%) translateY(0);
-            }
-        }
-        
-        @keyframes drawSVGCircle {
-            0% {
-                stroke-dashoffset: 144;
-                opacity: 0;
-            }
-            20% {
-                opacity: 1;
-            }
-            100% {
-                stroke-dashoffset: 0;
-                opacity: 0.7;
-            }
-        }
-        
-        .canvas.storytelling::before {
-            opacity: 0;
-        }
-        
-        .canvas.storytelling::after {
-            opacity: 0;
-        }
-        
-        .canvas.storytelling .design-story {
-            opacity: 1;
-        }
-        
-        @keyframes float1 {
-            0%, 100% { transform: translateY(0px) translateX(0px); }
-            50% { transform: translateY(-10px) translateX(5px); }
-        }
-        
-        @keyframes float2 {
-            0%, 100% { transform: rotate(45deg) translateY(0px); }
-            50% { transform: rotate(45deg) translateY(-8px); }
-        }
-        
-        @keyframes float3 {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-6px); }
-        }
-        
-        .canvas-info {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 12px;
-            border-radius: 6px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        
-        .canvas-info-text {
-            font-size: 11px;
-            color: #ccc;
-            margin-bottom: 4px;
-        }
-        
-        .canvas-size {
-            font-size: 10px;
-            color: #999;
-        }
-        
-        .design-layers {
-            position: absolute;
-            bottom: 20px;
-            right: 20px;
-            background: rgba(0,0,0,0.8);
-            padding: 15px;
-            border-radius: 8px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-            min-width: 140px;
-        }
-        
-        .layer-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-            font-size: 12px;
-            color: #fff;
-            cursor: pointer;
-            padding: 6px 8px;
-            border-radius: 4px;
-            transition: all 0.3s ease;
-        }
-        
-        .layer-item:hover {
-            background: rgba(1, 179, 255, 0.2);
-        }
-        
-        .layer-item:last-child {
-            margin-bottom: 0;
-        }
-        
-        .layer-icon {
-            width: 18px;
-            height: 18px;
-            background: #01B3FF;
-            border-radius: 2px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            color: white;
-            font-weight: 600;
-        }
-        
-        .gradient-effects {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            pointer-events: none;
-            overflow: hidden;
-            border-radius: 8px;
-        }
-        
-        .gradient-1 {
-            position: absolute;
-            width: 200px;
-            height: 200px;
-            background: radial-gradient(circle, #8B01E8 0%, transparent 70%);
-            top: -50px;
-            right: -50px;
-            filter: blur(40px);
-            opacity: 0.3;
-            animation: float1 6s ease-in-out infinite;
-        }
-        
-        .gradient-2 {
-            position: absolute;
-            width: 150px;
-            height: 150px;
-            background: radial-gradient(circle, #01B3FF 0%, transparent 70%);
-            bottom: -30px;
-            left: -30px;
-            filter: blur(35px);
-            opacity: 0.4;
-            animation: float2 8s ease-in-out infinite;
-        }
-        
-        .diagonal-lines {
-            position: absolute;
-            bottom: 10%;
-            right: 10%;
-            width: 400px;
-            height: 200px;
-            background: linear-gradient(45deg, transparent 48%, #01B3FF 49%, #01B3FF 51%, transparent 52%);
-            background-size: 20px 20px;
-            opacity: 0.2;
-            animation: slideLines 10s linear infinite;
-        }
-        
-        @keyframes slideLines {
-            0% { transform: translateX(0) translateY(0); }
-            100% { transform: translateX(-40px) translateY(-40px); }
-        }
-        
-        @media (max-width: 1200px) {
-            .content {
-                grid-template-columns: 1.1fr 0.9fr;
-                gap: 4rem;
-            }
-            
-            .main-title {
-                font-size: clamp(5rem, 10vw, 10rem);
-            }
-            
-            .subtitle, .subtitle-line2 {
-                font-size: clamp(2rem, 4.5vw, 3.5rem);
-            }
-            
-            .subtitle-script {
-                font-size: clamp(2.5rem, 5.5vw, 4.5rem);
-            }
-            
-            .ps-toolbar {
-                width: 50px;
-            }
-            
-            .ps-tool {
-                width: 35px;
-                height: 35px;
-            }
-            
-            .ps-tool svg {
-                width: 16px;
-                height: 16px;
-            }
-            
-            .canvas {
-                width: 220px;
-                height: 170px;
-            }
-            
-            .design-layers {
-                min-width: 120px;
-                padding: 12px;
-            }
-        }
-        
-        @media (max-width: 900px) {
-            .content {
-                grid-template-columns: 1fr;
-                gap: 3rem;
-                text-align: center;
-            }
-            
-            .main-title {
-                font-size: clamp(4rem, 12vw, 8rem);
-                margin-bottom: 1.5rem;
-            }
-            
-            .subtitle, .subtitle-line2 {
-                font-size: clamp(1.8rem, 6vw, 3rem);
-            }
-            
-            .subtitle-script {
-                font-size: clamp(2.2rem, 7vw, 3.8rem);
-            }
-            
-            .canvas-section {
-                height: 450px;
-                order: -1;
-                margin-bottom: 2rem;
-            }
-            
-            .ps-workspace {
-                flex-direction: row;
-            }
-            
-            .ps-toolbar {
-                width: 45px;
-                padding: 8px 0;
-                gap: 6px;
-            }
-            
-            .ps-tool {
-                width: 32px;
-                height: 32px;
-            }
-            
-            .ps-tool svg {
-                width: 14px;
-                height: 14px;
-            }
-            
-            .canvas {
-                width: 200px;
-                height: 150px;
-            }
-            
-            .design-layers {
-                min-width: 110px;
-                padding: 10px;
-            }
-            
-            .diagonal-lines {
-                width: 200px;
-                height: 100px;
-                bottom: 5%;
-                right: 5%;
-            }
-        }
-        
-        @media (max-width: 768px) {
-            .main-title {
-                font-size: clamp(3.5rem, 15vw, 6rem);
-                line-height: 0.9;
-            }
-            
-            .subtitle, .subtitle-line2 {
-                font-size: clamp(1.5rem, 8vw, 2.5rem);
-            }
-            
-            .subtitle-script {
-                font-size: clamp(1.8rem, 9vw, 3rem);
-            }
-            
-            .subtitle-line2 {
-                flex-direction: column;
-                gap: 0;
-                align-items: center;
-            }
-            
-            .canvas-section {
-                height: 400px;
-            }
-            
-            .ps-toolbar {
-                width: 40px;
-                padding: 6px 0;
-                gap: 4px;
-            }
-            
-            .ps-tool {
-                width: 28px;
-                height: 28px;
-            }
-            
-            .ps-tool svg {
-                width: 12px;
-                height: 12px;
-            }
-            
-            .canvas {
-                width: 180px;
-                height: 130px;
-            }
-            
-            .design-layers, .canvas-info {
-                display: none;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .main-title {
-                font-size: clamp(2.8rem, 18vw, 5rem);
-            }
-            
-            .subtitle, .subtitle-line2 {
-                font-size: clamp(1.2rem, 10vw, 2rem);
-            }
-            
-            .subtitle-script {
-                font-size: clamp(1.5rem, 12vw, 2.5rem);
-            }
-            
-            .ps-workspace {
-                min-height: 180px;
-            }
-            
-            .ps-toolbar {
-                width: 35px;
-                padding: 4px 0;
-                gap: 3px;
-            }
-            
-            .ps-tool {
-                width: 25px;
-                height: 25px;
-            }
-            
-            .ps-tool svg {
-                width: 11px;
-                height: 11px;
-            }
-            
-            .canvas {
-                width: 240px;
-                height: 140px;
-            }
-            
-            .ps-canvas-area {
-                padding: 8px;
-            }
-            
-            .final-text {
-                font-size: 12px !important;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Started White - Design & Strategy</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --primary-color: #ffffff;
+    --secondary-color: #cccccc;
+    --accent-color: #666666;
+    --bg-primary: #000000;
+    --bg-secondary: #111111;
+    --bg-tertiary: #0a0a0a;
+    --transition-smooth: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --transition-quick: all 0.2s ease;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--primary-color);
+    background: var(--bg-primary);
+    overflow-x: hidden;
+    line-height: 1.6;
+}
+
+/* Smooth scrolling */
+html {
+    scroll-behavior: smooth;
+}
+
+/* CURSOR PERSONALIZADO */
+body {
+    cursor: none;
+}
+
+.cursor {
+    position: fixed;
+    width: 20px;
+    height: 20px;
+    background: var(--primary-color);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    mix-blend-mode: difference;
+    transition: transform 0.1s ease;
+}
+
+.cursor-follower {
+    position: fixed;
+    width: 40px;
+    height: 40px;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: all 0.15s ease;
+}
+
+/* LOADING ANIMATION */
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background: var(--bg-primary);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-text {
+    font-size: 2rem;
+    font-weight: 300;
+    opacity: 0;
+    animation: fadeInOut 2s ease-in-out;
+}
+
+/* NAVBAR MELHORADA */
+.navbar {
+    position: fixed;
+    top: -80px;
+    left: 0;
+    right: 0;
+    height: 80px;
+    background: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    z-index: 1000;
+    transition: var(--transition-smooth);
+}
+
+.navbar.visible {
+    top: 0;
+}
+
+.nav-container {
+    width: 100%;
+    margin: 0;
+    padding: 0 3rem;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-size: 1.8rem;
+    font-weight: 600;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-quick);
+    letter-spacing: -0.02em;
+}
+
+.nav-logo:hover {
+    opacity: 0.7;
+    transform: scale(0.98);
+}
+
+.hamburger-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    cursor: pointer;
+    padding: 6px;
+    transition: var(--transition-quick);
+}
+
+.hamburger-menu:hover {
+    transform: scale(1.1);
+}
+
+.hamburger-line {
+    width: 24px;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    margin: 3px 0;
+    transition: var(--transition-smooth);
+    transform-origin: center;
+    border-radius: 1px;
+}
+
+.hamburger-menu.active .hamburger-line:nth-child(1) {
+    transform: rotate(45deg) translate(6px, 6px);
+}
+.hamburger-menu.active .hamburger-line:nth-child(2) {
+    opacity: 0;
+    transform: translateX(20px);
+}
+.hamburger-menu.active .hamburger-line:nth-child(3) {
+    transform: rotate(-45deg) translate(6px, -6px);
+}
+
+/* MENU LATERAL MELHORADO */
+.menu {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 320px;
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 4rem 3rem;
+    transition: var(--transition-smooth);
+    z-index: 999;
+    border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.menu.active {
+    right: 0;
+}
+
+.menu a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 2rem;
+    font-weight: 300;
+    transition: var(--transition-smooth);
+    padding: 1rem 0;
+    position: relative;
+    overflow: hidden;
+    opacity: 0;
+    transform: translateX(50px);
+}
+
+.menu.active a {
+    animation: slideInRight 0.6s ease forwards;
+}
+
+.menu.active a:nth-child(1) { animation-delay: 0.1s; }
+.menu.active a:nth-child(2) { animation-delay: 0.2s; }
+.menu.active a:nth-child(3) { animation-delay: 0.3s; }
+.menu.active a:nth-child(4) { animation-delay: 0.4s; }
+
+.menu a::before {
+    content: '';
+    position: absolute;
+    left: -100%;
+    bottom: 0;
+    width: 100%;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+    transition: var(--transition-smooth);
+}
+
+.menu a:hover {
+    color: var(--secondary-color);
+    transform: translateX(10px);
+}
+
+.menu a:hover::before {
+    left: 0;
+}
+
+/* HERO MELHORADO */
+.hero {
+    height: 100vh;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 3rem;
+    position: relative;
+    background: #000000 url('https://github.com/user-attachments/assets/20ec56e2-ebe8-4b7f-844f-94240139702e') no-repeat;
+    background-size: cover;
+    background-position: center;
+    overflow: hidden;
+}
+
+.hero .left,
+.hero .right {
+    position: relative;
+    z-index: 3;
+}
+
+.hero-image {
+    position: absolute;
+    bottom: 2rem;
+    right: 3rem;
+    width: 200px;
+    height: 200px;
+    border-radius: 1rem;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    opacity: 0;
+    transform: translateY(30px);
+    animation: fadeInUp 1.2s ease 1.2s forwards;
+}
+
+.hero-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition-smooth);
+}
+
+.hero-image:hover img {
+    transform: scale(1.05);
+}
+
+.hero .left {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1.2s ease 0.5s forwards;
+    letter-spacing: -0.03em;
+    max-width: 70%;
+}
+
+.hero .right {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 400;
+    opacity: 0;
+    transform: translateY(40px);
+    animation: fadeInUp 1.2s ease 0.8s forwards;
+    position: relative;
+}
+
+.hero .right a {
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: var(--transition-smooth);
+    border-bottom: 2px solid transparent;
+    padding: 0.5rem 0;
+    position: relative;
+    display: inline-block;
+}
+
+.hero .right a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    transition: var(--transition-smooth);
+}
+
+.hero .right a:hover::after {
+    width: 100%;
+}
+
+.hero .right a:hover {
+    color: var(--secondary-color);
+    transform: translateX(5px);
+}
+
+/* ABOUT MELHORADO */
+.about {
+    min-height: 100vh;
+    padding: 8rem 3rem;
+    background: #000000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    position: relative;
+}
+
+.about::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 1px;
+    height: 100px;
+    background: linear-gradient(to bottom, transparent, var(--accent-color), transparent);
+}
+
+.about-text {
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 1.3;
+    max-width: 1100px;
+    color: var(--primary-color);
+    opacity: 0;
+    transform: translateY(40px);
+    transition: all 1s ease;
+    margin-bottom: 3rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.about-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--primary-color);
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    padding: 1rem 2rem;
+    border-radius: 50px;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+}
+
+.about-btn::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: var(--transition-smooth);
+}
+
+.about-btn:hover::before {
+    left: 100%;
+}
+
+.about-btn:hover {
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+}
+
+/* QUICK WORK MELHORADO */
+.quick-work {
+    min-height: 100vh;
+    padding: 8rem 3rem;
+    background: #000000;
+    color: var(--primary-color);
+    text-align: center;
+    position: relative;
+}
+
+.quick-work h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 4rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease;
+}
+
+.card-slider {
+    position: relative;
+    width: 90%;
+    max-width: 1400px;
+    height: 400px;
+    margin: 0 auto 4rem;
+    perspective: 1500px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    position: absolute;
+    width: 280px;
+    height: 400px;
+    background: #111111;
+    border-radius: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.8rem;
+    font-weight: 400;
+    color: var(--primary-color);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), transparent);
+    border-radius: 1.5rem;
+    opacity: 0;
+    transition: var(--transition-smooth);
+}
+
+.card:hover::before {
+    opacity: 1;
+}
+
+.card:hover {
+    box-shadow: 0 35px 70px rgba(0, 0, 0, 0.9);
+}
+
+.slider-controls {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.slider-controls button {
+    background: transparent;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    color: var(--primary-color);
+    padding: 1rem 1.5rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: var(--transition-smooth);
+    backdrop-filter: blur(10px);
+    font-weight: 300;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slider-controls button:hover {
+    border-color: var(--primary-color);
+    background: rgba(255, 255, 255, 0.1);
+    transform: scale(1.1);
+}
+
+/* CONTACTS MELHORADO */
+.contacts {
+    min-height: 60vh;
+    padding: 8rem 3rem;
+    background: #000000;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.contacts h2 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    margin-bottom: 3rem;
+    font-weight: 300;
+    letter-spacing: -0.02em;
+}
+
+.contact-links {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.contact-link {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-size: 1.2rem;
+    font-weight: 400;
+    transition: var(--transition-smooth);
+    padding: 1rem 2rem;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    backdrop-filter: blur(10px);
+}
+
+.contact-link:hover {
+    color: var(--secondary-color);
+    border-color: var(--secondary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(255, 255, 255, 0.1);
+}
+
+.contact-form {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+    width: 100%;
+    max-width: 900px;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.02);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(20px);
+}
+
+.contact-form input,
+.contact-form select {
+    flex: 1;
+    padding: 1rem 0;
+    border: none;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+    background: transparent;
+    color: var(--primary-color);
+    font-size: 1rem;
+    font-family: inherit;
+    transition: var(--transition-smooth);
+}
+
+.contact-form input::placeholder {
+    color: var(--accent-color);
+}
+
+.contact-form select {
+    color: var(--accent-color);
+}
+
+.contact-form select option {
+    background: var(--bg-secondary);
+    color: var(--primary-color);
+}
+
+.contact-form input:focus,
+.contact-form select:focus {
+    outline: none;
+    border-bottom-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+.contact-form button {
+    padding: 1rem 3rem;
+    font-size: 1.1rem;
+    font-weight: 500;
+    border: 2px solid var(--primary-color);
+    border-radius: 50px;
+    background: transparent;
+    color: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition-smooth);
+    position: relative;
+    overflow: hidden;
+}
+
+.contact-form button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: var(--primary-color);
+    transition: var(--transition-smooth);
+    z-index: -1;
+}
+
+.contact-form button:hover::before {
+    left: 0;
+}
+
+.contact-form button:hover {
+    color: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
+/* ANIMATIONS */
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInRight {
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0; }
+    50% { opacity: 1; }
+}
+
+.fade-in {
+    opacity: 1 !important;
+    transform: translateY(0) !important;
+}
+
+/* RESPONSIVO */
+@media (max-width: 1024px) {
+    .nav-container { padding: 0 2rem; }
+    .hero { padding: 0 2rem; }
+    .about { padding: 6rem 2rem; }
+    .quick-work { padding: 6rem 2rem; }
+    .contacts { padding: 6rem 2rem; }
+    .card { width: 240px; height: 340px; }
+    .hero-image { width: 150px; height: 150px; right: 2rem; }
+}
+
+@media (max-width: 768px) {
+    .hero {
+        flex-direction: column;
+        justify-content: center;
+        text-align: center;
+        gap: 3rem;
+    }
+    .hero .left { max-width: 100%; }
+    .hero::before {
+        width: 70%;
+        height: 60%;
+    }
+    .hero-shapes {
+        width: 70%;
+        height: 60%;
+    }
+    .hero-block.block1 {
+        width: 80px;
+        height: 80px;
+        top: 15%;
+        right: 20%;
+    }
+    .hero-block.block2 {
+        width: 60px;
+        height: 60px;
+        bottom: 25%;
+        right: 10%;
+    }
+    .hero-heart {
+        width: 80px;
+        height: 80px;
+        right: -40px;
+    }
+    .hero-heart::before,
+    .hero-heart::after {
+        width: 40px;
+        height: 64px;
+        border-radius: 40px 40px 0 0;
+    }
+    .hero-heart::before {
+        left: 40px;
+    }
+    .hero-image { 
+        position: relative; 
+        bottom: auto; 
+        right: auto; 
+        width: 120px; 
+        height: 120px; 
+        z-index: 4;
+    }
+    .contact-form {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+    .contact-links {
+        flex-direction: column;
+        gap: 1rem;
+    }
+    .menu { width: 100%; }
+    .card { width: 200px; height: 300px; }
+    .slider-controls { gap: 1rem; }
+}
+
+@media (max-width: 480px) {
+    .nav-container { padding: 0 1rem; }
+    .hero, .about, .quick-work, .contacts { padding-left: 1rem; padding-right: 1rem; }
+    .hero-image { width: 100px; height: 100px; }
+    .contact-links { gap: 0.5rem; }
+    .contact-link { padding: 0.8rem 1.5rem; font-size: 1rem; }
+}
+
+/* MEDIA QUERIES PARA CURSOR APENAS EM DESKTOP */
+@media (hover: none) and (pointer: coarse) {
+    body { cursor: auto; }
+    .cursor, .cursor-follower { display: none; }
+}
+</style>
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <div class="text-section">
-                <h1 class="main-title">STARTED<br>WHITE</h1>
-            </div>
-            
-            <div class="canvas-section">
-                <div class="photoshop-interface" onclick="openCreativeProcess()">
-                    <div class="ps-title-bar">
-                        <div class="ps-controls">
-                            <div class="ps-control close"></div>
-                            <div class="ps-control minimize"></div>
-                            <div class="ps-control maximize"></div>
-                        </div>
-                        <div class="ps-title">Started White @ 100% (RGB/8)</div>
-                    </div>
-                    
-                    <div class="ps-workspace">
-                        <div class="ps-toolbar">
-                            <div class="ps-tool active" title="Move Tool (V)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M13,6V11H18V7.75L22.25,12L18,16.25V13H13V18H16.25L12,22.25L7.75,18H11V13H6V16.25L1.75,12L6,7.75V11H11V6H7.75L12,1.75L16.25,6H13Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Marquee Tool (M)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M3,3H9V5H5V9H3V3M15,3H21V9H19V5H15V3M19,15H21V21H15V19H19V15M5,15H9V21H3V15H5V19H3V15Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Lasso Tool (L)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M3.5,17.5C4.36,18.36 5.64,18.36 6.5,17.5C7.36,16.64 7.36,15.36 6.5,14.5C5.64,13.64 4.36,13.64 3.5,14.5C2.64,15.36 2.64,16.64 3.5,17.5M8.91,13.09L15.5,6.5L17.5,8.5L10.91,15.09L8.91,13.09M12,2L13.09,3.09L22,12L13.09,20.91L12,22L10.91,20.91L2,12L10.91,3.09L12,2Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Magic Wand (W)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M7,1L9.5,6L15,4L11.5,9L17,7L13.5,12L19,10L15.5,15H22V17H15.5L19,22L13.5,20L17,15L11.5,17L15,12L9.5,14L13,9L7,11L10.5,6L5,8L8.5,3L3,5L6.5,0L7,1M2,18H9V20H2V18Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Crop Tool (C)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M7,17V1H5V5H1V7H5V17A2,2 0 0,0 7,19H17V23H19V19H23V17H19V7A2,2 0 0,0 17,5H7V17M17,7V17H7V7H17Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Eyedropper (I)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M19.35,10.04C18.67,6.59 15.64,4 12,4C10.73,4 9.5,4.4 8.47,5.09L9.88,6.5C10.54,6.19 11.26,6 12,6C14.67,6 16.88,7.88 17.42,10.42L9.88,17.96C9.58,17.66 9.34,17.29 9.17,16.89L7.76,18.3C8.22,19 8.84,19.59 9.57,20.03L10.97,21.43L15.54,16.86L19.35,10.04Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Healing Brush (J)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Brush Tool (B)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M20.71,4.63L19.37,3.29C19,2.9 18.35,2.9 17.96,3.29L9,12.25L11.75,15L20.71,6.04C21.1,5.65 21.1,5 20.71,4.63M7,14A3,3 0 0,0 4,17C4,18.31 2.84,19 2,19C2.92,20.22 4.5,21 6,21A4,4 0 0,0 10,17A3,3 0 0,0 7,14Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Clone Stamp (S)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M12,2A2,2 0 0,1 14,4C14,4.74 13.6,5.39 13,5.73V7H14A7,7 0 0,1 21,14H22V16H21V20A2,2 0 0,1 19,22H5A2,2 0 0,1 3,20V16H2V14H3A7,7 0 0,1 10,7H11V5.73C10.4,5.39 10,4.74 10,4A2,2 0 0,1 12,2M7.5,12A0.5,0.5 0 0,0 7,12.5A0.5,0.5 0 0,0 7.5,13A0.5,0.5 0 0,0 8,12.5A0.5,0.5 0 0,0 7.5,12M16.5,12A0.5,0.5 0 0,0 16,12.5A0.5,0.5 0 0,0 16.5,13A0.5,0.5 0 0,0 17,12.5A0.5,0.5 0 0,0 16.5,12Z"/>
-                                </svg>
-                            </div>
-                            <div class="ps-tool" title="Eraser Tool (E)">
-                                <svg viewBox="0 0 24 24">
-                                    <path d="M16.24,3.56L21.19,8.5C21.97,9.29 21.97,10.55 21.19,11.34L12,20.53C10.44,22.09 7.91,22.09 6.34,20.53L2.81,17C2.03,16.21 2.03,14.95 2.81,14.16L13.41,3.56C14.2,2.78 15.46,2.78 16.24,3.56M4.22,15.58L7.76,19.11C8.54,19.9 9.8,19.9 10.59,19.11L14.12,15.58L9.17,10.63L4.22,15.58Z"/>
-                                </svg>
-                            </div>
-                        </div>
-                        
-                        <div class="ps-canvas-area">
-                            <div class="canvas" id="mainCanvas" onclick="startStoryTelling()">
-                                <div class="design-story">
-                                    <div class="story-step story-step-1">
-                                        <!-- Sketch phase -->
-                                        <div class="sketch-line sketch-line-1"></div>
-                                        <div class="sketch-line sketch-line-2"></div>
-                                        <div class="sketch-line sketch-line-3"></div>
-                                        <svg class="sketch-circle" style="position: absolute; top: 25%; right: 30%; width: 50px; height: 50px;">
-                                            <circle cx="25" cy="25" r="23" fill="none" stroke="#ccc" stroke-width="2" 
-                                                    style="stroke-dasharray: 144; stroke-dashoffset: 144; animation: drawSVGCircle 2s ease-out forwards; animation-delay: 0.8s;"/>
-                                        </svg>
-                                        <div class="sketch-box"></div>
-                                    </div>
-                                    <div class="story-step story-step-2">
-                                        <!-- Wireframe phase -->
-                                        <div class="wireframe-header"></div>
-                                        <div class="wireframe-content">
-                                            <div class="wireframe-text"></div>
-                                            <div class="wireframe-text"></div>
-                                            <div class="wireframe-text"></div>
-                                        </div>
-                                        <div class="wireframe-sidebar"></div>
-                                    </div>
-                                    <div class="story-step story-step-3">
-                                        <!-- Final design phase -->
-                                        <div class="design-header"></div>
-                                        <div class="design-content"></div>
-                                        <div class="design-sidebar"></div>
-                                        <div class="design-accent"></div>
-                                        <div class="final-text">Like any canvas,<br>it all started white</div>
-                                    </div>
-                                </div>
-                            </div>
-                            
-                            <div class="canvas-info">
-                                <div class="canvas-info-text">New Document</div>
-                                <div class="canvas-size">1920 × 1080 px</div>
-                            </div>
-                            
-                            <div class="design-layers">
-                                <div class="layer-item">
-                                    <div class="layer-icon">S</div>
-                                    <span>Shapes</span>
-                                </div>
-                                <div class="layer-item">
-                                    <div class="layer-icon">C</div>
-                                    <span>Colors</span>
-                                </div>
-                                <div class="layer-item">
-                                    <div class="layer-icon">T</div>
-                                    <span>Typography</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <div class="gradient-effects">
-                        <div class="gradient-1"></div>
-                        <div class="gradient-2"></div>
-                    </div>
-                </div>
-            </div>
+
+<!-- LOADING SCREEN -->
+<div class="loading-screen" id="loadingScreen">
+    <div class="loading-text">Started White</div>
+</div>
+
+<!-- CURSOR PERSONALIZADO -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-follower" id="cursorFollower"></div>
+
+<!-- NAVBAR -->
+<nav class="navbar" id="navbar">
+    <div class="nav-container">
+        <a href="#hero" class="nav-logo">Started White</a>
+        <div class="hamburger-menu" id="hamburgerMenu">
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
+            <div class="hamburger-line"></div>
         </div>
     </div>
+</nav>
+
+<!-- MENU LATERAL -->
+<div class="menu" id="menu">
+    <a href="#hero">Work</a>
+    <a href="#about">About</a>
+    <a href="#quick-work">Portfolio</a>
+    <a href="#contacts">Contact</a>
+</div>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+    <div class="left">
+        Like any Canvas,<br>
+        It all Started White!
+    </div>
+    <div class="right">
+        <a href="#about">Vamos Trabalhar →</a>
+    </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+    <p class="about-text">
+        Na Started White, design é mais que estética: é estratégia, inovação e emoção.<br>
+        Criamos identidades e experiências visuais que marcam e fazem a diferença.
+    </p>
+    <a href="#quick-work" class="about-btn">
+        <span>Descobre Mais</span>
+        <span>→</span>
+    </a>
+</section>
+
+<!-- QUICK WORK -->
+<section class="quick-work" id="quick-work">
+    <h2>Alguns Trabalhos</h2>
+    <div class="card-slider">
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+        <div class="card"></div>
+    </div>
+    <div class="slider-controls">
+        <button id="prev">←</button>
+        <button id="next">→</button>
+    </div>
+</section>
+
+<!-- CONTACTS -->
+<section class="contacts" id="contacts">
+    <h2>Fala Connosco</h2>
     
-    <script>
-        let storyActive = false;
-        let storyStep = 0;
+    <div class="contact-links">
+        <a href="mailto:hello@startedwhite.com" class="contact-link">
+            <span>📧</span>
+            <span>hello@startedwhite.com</span>
+        </a>
+        <a href="https://instagram.com/startedwhite" class="contact-link" target="_blank" rel="noopener">
+            <span>📷</span>
+            <span>@startedwhite</span>
+        </a>
+    </div>
+    
+    <form class="contact-form" id="contactForm">
+        <input type="text" placeholder="Nome" required>
+        <select required>
+            <option value="">Serviço</option>
+            <option value="branding">Branding</option>
+            <option value="product">Product Design</option>
+            <option value="ui">UI/UX Design</option>
+            <option value="strategy">Creative Strategy</option>
+        </select>
+        <button type="submit">Vamos Falar</button>
+    </form>
+</section>
+
+<script>
+// Loading screen
+window.addEventListener('load', () => {
+    setTimeout(() => {
+        document.getElementById('loadingScreen').style.opacity = '0';
+        setTimeout(() => {
+            document.getElementById('loadingScreen').style.display = 'none';
+        }, 500);
+    }, 1500);
+});
+
+// Cursor personalizado (apenas desktop)
+if (window.innerWidth > 768) {
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursorFollower');
+    
+    let mouseX = 0, mouseY = 0;
+    let followerX = 0, followerY = 0;
+    
+    document.addEventListener('mousemove', (e) => {
+        mouseX = e.clientX;
+        mouseY = e.clientY;
         
-        function startStoryTelling() {
-            if (storyActive) return;
-            
-            const canvas = document.getElementById('mainCanvas');
-            canvas.classList.add('storytelling');
-            storyActive = true;
-            storyStep = 0;
-            
-            // Show story steps sequentially - realistic design process
-            setTimeout(() => showStoryStep(1), 500);  // Sketch phase - rough ideas
-            setTimeout(() => showStoryStep(2), 4000); // Wireframe phase - structure
-            setTimeout(() => showStoryStep(3), 7500); // Final design - polished result
-            
-            // Reset after story completes
-            setTimeout(() => {
-                resetCanvas();
-            }, 13000);
+        cursor.style.left = mouseX - 10 + 'px';
+        cursor.style.top = mouseY - 10 + 'px';
+    });
+    
+    function updateFollower() {
+        followerX += (mouseX - followerX) * 0.1;
+        followerY += (mouseY - followerY) * 0.1;
+        
+        cursorFollower.style.left = followerX - 20 + 'px';
+        cursorFollower.style.top = followerY - 20 + 'px';
+        
+        requestAnimationFrame(updateFollower);
+    }
+    updateFollower();
+}
+
+// Navbar scroll effect - aparece apenas quando sai do hero
+window.addEventListener('scroll', () => {
+    const navbar = document.getElementById('navbar');
+    const heroHeight = document.getElementById('hero').offsetHeight;
+    
+    if (window.scrollY >= heroHeight - 100) {
+        navbar.classList.add('visible');
+    } else {
+        navbar.classList.remove('visible');
+    }
+});
+
+// Toggle menu lateral
+const hamburgerMenu = document.getElementById('hamburgerMenu');
+const menu = document.getElementById('menu');
+
+hamburgerMenu.addEventListener('click', () => {
+    hamburgerMenu.classList.toggle('active');
+    menu.classList.toggle('active');
+});
+
+document.querySelectorAll('.menu a').forEach(link => {
+    link.addEventListener('click', () => {
+        hamburgerMenu.classList.remove('active');
+        menu.classList.remove('active');
+    });
+});
+
+// Fechar menu ao clicar fora
+document.addEventListener('click', (e) => {
+    if (!menu.contains(e.target) && !hamburgerMenu.contains(e.target)) {
+        hamburgerMenu.classList.remove('active');
+        menu.classList.remove('active');
+    }
+});
+
+// Scroll animations melhoradas
+const observerOptions = {
+    threshold: 0.2,
+    rootMargin: '0px 0px -80px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('fade-in');
         }
+    });
+}, observerOptions);
+
+document.addEventListener('DOMContentLoaded', () => {
+    const elementsToObserve = [
+        '.about-text',
+        '.about-btn', 
+        '.quick-work h2',
+        '.contacts h2',
+        '.contact-form'
+    ];
+    
+    elementsToObserve.forEach(selector => {
+        const elements = document.querySelectorAll(selector);
+        elements.forEach(el => observer.observe(el));
+    });
+});
+
+// Quick Work slider melhorado
+const cards = document.querySelectorAll('.card');
+const prevBtn = document.getElementById('prev');
+const nextBtn = document.getElementById('next');
+let currentIndex = 0;
+let isTransitioning = false;
+
+function updateCards() {
+    if (isTransitioning) return;
+    
+    isTransitioning = true;
+    
+    cards.forEach((card, i) => {
+        const offset = i - currentIndex;
+        const absOffset = Math.abs(offset);
         
-        function showStoryStep(step) {
-            const steps = document.querySelectorAll('.story-step');
-            steps.forEach(s => s.classList.remove('active'));
-            
-            const currentStep = document.querySelector(`.story-step-${step}`);
-            if (currentStep) {
-                currentStep.classList.add('active');
-                storyStep = step;
-            }
+        card.style.zIndex = cards.length - absOffset;
+        card.style.transform = `
+            translateX(${offset * 140}px) 
+            translateZ(${-absOffset * 80}px) 
+            scale(${offset === 0 ? 1 : Math.max(0.7, 1 - absOffset * 0.1)}) 
+            rotateY(${offset * 12}deg)
+        `;
+        card.style.opacity = absOffset > 2 ? '0' : Math.max(0.3, 1 - absOffset * 0.2);
+    });
+    
+    setTimeout(() => {
+        isTransitioning = false;
+    }, 600);
+}
+
+prevBtn.addEventListener('click', () => {
+    if (!isTransitioning) {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : cards.length - 1;
+        updateCards();
+    }
+});
+
+nextBtn.addEventListener('click', () => {
+    if (!isTransitioning) {
+        currentIndex = currentIndex < cards.length - 1 ? currentIndex + 1 : 0;
+        updateCards();
+    }
+});
+
+// Auto-rotate cards
+let autoRotate = setInterval(() => {
+    if (!isTransitioning) {
+        currentIndex = currentIndex < cards.length - 1 ? currentIndex + 1 : 0;
+        updateCards();
+    }
+}, 4000);
+
+// Pause auto-rotate on hover
+const cardSlider = document.querySelector('.card-slider');
+cardSlider.addEventListener('mouseenter', () => clearInterval(autoRotate));
+cardSlider.addEventListener('mouseleave', () => {
+    autoRotate = setInterval(() => {
+        if (!isTransitioning) {
+            currentIndex = currentIndex < cards.length - 1 ? currentIndex + 1 : 0;
+            updateCards();
         }
-        
-        function resetCanvas() {
-            const canvas = document.getElementById('mainCanvas');
-            canvas.classList.remove('storytelling');
-            
-            // Reset all steps
-            const steps = document.querySelectorAll('.story-step');
-            steps.forEach(s => s.classList.remove('active'));
-            
-            storyActive = false;
-            storyStep = 0;
-        }
-        
-        function openCreativeProcess() {
-            if (!storyActive) {
-                startStoryTelling();
-            }
-        }
-        
-        // Reset canvas to blank state on load
-        document.addEventListener('DOMContentLoaded', function() {
-            const canvas = document.getElementById('mainCanvas');
-            if (canvas) {
-                canvas.onclick = function(e) {
-                    if (!storyActive) {
-                        startStoryTelling();
-                    }
-                };
-            }
-        });
-    </script>
+    }, 4000);
+});
+
+// Keyboard navigation
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft' && !isTransitioning) {
+        currentIndex = currentIndex > 0 ? currentIndex - 1 : cards.length - 1;
+        updateCards();
+    } else if (e.key === 'ArrowRight' && !isTransitioning) {
+        currentIndex = currentIndex < cards.length - 1 ? currentIndex + 1 : 0;
+        updateCards();
+    }
+});
+
+// Initialize cards
+updateCards();
+
+// Form submission
+document.getElementById('contactForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    
+    const button = e.target.querySelector('button');
+    const originalText = button.textContent;
+    
+    button.textContent = 'Sending...';
+    button.style.opacity = '0.7';
+    
+    // Simulate form submission
+    setTimeout(() => {
+        button.textContent = 'Message Sent!';
+        setTimeout(() => {
+            button.textContent = originalText;
+            button.style.opacity = '1';
+            e.target.reset();
+        }, 2000);
+    }, 1000);
+});
+
+// Parallax effect for hero section
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const hero = document.querySelector('.hero');
+    if (hero) {
+        hero.style.transform = `translateY(${scrolled * 0.3}px)`;
+    }
+});
+</script>
 </body>
 </html>
