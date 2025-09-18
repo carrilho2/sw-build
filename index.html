@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Started White - Design & Strategy</title>
+<title>Started White</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -232,36 +232,53 @@ body {
 /* HERO MELHORADO */
 .hero {
     height: 100vh;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 3rem;
     position: relative;
-    background: #000000 url('https://github.com/user-attachments/assets/20ec56e2-ebe8-4b7f-844f-94240139702e') no-repeat;
+    background: #000000 url('https://github.com/user-attachments/assets/0c8b39b7-60c5-4b5a-a9bc-2700a93771e2') no-repeat;
     background-size: cover;
     background-position: center;
     overflow: hidden;
 }
 
-.hero .left,
-.hero .right {
-    position: relative;
+/* Conteúdo no fundo */
+.hero-content {
+    position: absolute;
+    bottom: 2rem; /* distância do fundo */
+    left: 2rem;   /* distância da esquerda */
+    right: 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
     z-index: 3;
 }
 
-.hero-image {
-    position: absolute;
-    bottom: 2rem;
-    right: 3rem;
-    width: 200px;
-    height: 200px;
-    border-radius: 1rem;
-    overflow: hidden;
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    opacity: 0;
-    transform: translateY(30px);
-    animation: fadeInUp 1.2s ease 1.2s forwards;
+.hero .left {
+    font-size: clamp(2.5rem, 8vw, 6rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.03em;
+    max-width: 70%;
 }
+
+.hero .right {
+    font-size: clamp(1.2rem, 3vw, 2rem);
+    font-weight: 400;
+}
+
+/* MOBILE: empilhados no canto inferior esquerdo */
+@media (max-width: 768px) {
+    .hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-end;
+        gap: 1rem;
+    }
+
+    .hero .left,
+    .hero .right {
+        max-width: 100%;
+    }
+}
+
 
 .hero-image img {
     width: 100%;
@@ -780,14 +797,17 @@ body {
 
 <!-- HERO -->
 <section class="hero" id="hero">
-    <div class="left">
-        Like any Canvas,<br>
-        It all Started White!
-    </div>
-    <div class="right">
-        <a href="#about">Vamos Trabalhar →</a>
+    <div class="hero-content">
+        <div class="left">
+            Like any Canvas,<br>
+            It all Started White!
+        </div>
+        <div class="right">
+            <a href="#about">Portfolio →</a>
+        </div>
     </div>
 </section>
+
 
 <!-- ABOUT -->
 <section class="about" id="about">
@@ -796,14 +816,14 @@ body {
         Criamos identidades e experiências visuais que marcam e fazem a diferença.
     </p>
     <a href="#quick-work" class="about-btn">
-        <span>Descobre Mais</span>
+        <span>Sobre Nós</span>
         <span>→</span>
     </a>
 </section>
 
 <!-- QUICK WORK -->
 <section class="quick-work" id="quick-work">
-    <h2>Alguns Trabalhos</h2>
+    <h2>Olha Aqui! 👀</h2>
     <div class="card-slider">
         <div class="card"></div>
         <div class="card"></div>
@@ -819,7 +839,7 @@ body {
 
 <!-- CONTACTS -->
 <section class="contacts" id="contacts">
-    <h2>Fala Connosco</h2>
+    <h2>Vamos Conversar! 👋</h2>
     
     <div class="contact-links">
         <a href="mailto:hello@startedwhite.com" class="contact-link">
@@ -840,11 +860,7 @@ body {
             <option value="product">Product Design</option>
             <option value="ui">UI/UX Design</option>
             <option value="strategy">Creative Strategy</option>
-        </select>
-        <button type="submit">Vamos Falar</button>
-    </form>
 </section>
-
 <script>
 // Loading screen
 window.addEventListener('load', () => {
@@ -856,7 +872,7 @@ window.addEventListener('load', () => {
     }, 1500);
 });
 
-// Cursor personalizado (apenas desktop)
+
 if (window.innerWidth > 768) {
     const cursor = document.getElementById('cursor');
     const cursorFollower = document.getElementById('cursorFollower');
@@ -884,7 +900,7 @@ if (window.innerWidth > 768) {
     updateFollower();
 }
 
-// Navbar scroll effect - aparece apenas quando sai do hero
+
 window.addEventListener('scroll', () => {
     const navbar = document.getElementById('navbar');
     const heroHeight = document.getElementById('hero').offsetHeight;
