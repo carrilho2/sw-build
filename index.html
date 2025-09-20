@@ -888,73 +888,318 @@ html {
     transform: translateY(0) !important;
 }
 
-/* RESPONSIVIDADE APRIMORADA */
+/* RESPONSIVIDADE OTIMIZADA PARA MOBILE */
 @media (max-width: 1024px) {
     .nav-container { padding: 0 2rem; }
     .hero-content { left: 1.5rem; right: 1.5rem; width: calc(100% - 3rem); }
-    .about { padding: 6rem 2rem; }
-    .quick-work { padding: 6rem 2rem; }
-    .contacts { padding: 6rem 2rem; }
-    .card { width: 240px; height: 340px; }
+    .about { padding: 5rem 2rem; }
+    .quick-work { padding: 5rem 2rem; }
+    .contacts { padding: 5rem 2rem; }
+    .card { width: 260px; height: 360px; }
+    
+    .hero .left {
+        font-size: clamp(2rem, 6vw, 4rem);
+    }
+    
+    .about-text {
+        font-size: clamp(1.5rem, 4vw, 3rem);
+    }
+    
+    .quick-work h2, .contacts h2 {
+        font-size: clamp(1.8rem, 4vw, 2.5rem);
+    }
 }
 
 @media (max-width: 768px) {
+    /* HERO MOBILE */
+    .hero {
+        padding: 2rem 1rem;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+    }
+    
     .hero-content {
         flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-end;
-        gap: 1rem;
-        left: 1rem;
-        right: 1rem;
-        width: calc(100% - 2rem);
+        align-items: center;
+        justify-content: center;
+        gap: 2rem;
+        left: 50%;
+        right: auto;
+        width: auto;
+        transform: translateX(-50%);
+        position: static;
+        height: auto;
+        bottom: auto;
     }
 
-    .hero .left,
+    .hero .left {
+        max-width: 100%;
+        text-align: center;
+        font-size: clamp(1.8rem, 8vw, 3.5rem);
+        line-height: 1.2;
+    }
+    
     .hero .right {
         max-width: 100%;
+        text-align: center;
+        font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+    
+    /* NAVBAR MOBILE */
+    .nav-container { 
+        padding: 0 1.5rem; 
+    }
+    
+    .nav-logo {
+        font-size: 1.5rem;
+    }
+    
+    /* MENU MOBILE */
+    .menu { 
+        width: 100%; 
+        padding: 3rem 1.5rem;
+        justify-content: flex-start;
+        padding-top: 6rem;
+    }
+    
+    .menu a {
+        font-size: 1.8rem;
+        padding: 1.5rem 0;
+        width: 100%;
+        text-align: left;
+    }
+    
+    /* ABOUT MOBILE */
+    .about {
+        padding: 4rem 1.5rem;
+        min-height: 80vh;
+    }
+    
+    .about-text {
+        font-size: clamp(1.3rem, 5vw, 2.2rem);
+        line-height: 1.4;
+        margin-bottom: 2.5rem;
+    }
+    
+    .about-btn {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.8rem;
+    }
+    
+    /* PORTFOLIO MOBILE */
+    .quick-work {
+        padding: 4rem 1rem;
+    }
+    
+    .quick-work h2 {
+        margin-bottom: 3rem;
+    }
+    
+    .card-slider {
+        height: 320px;
+        width: 100%;
+        max-width: none;
+        margin: 0 auto 3rem;
+        overflow: hidden;
+    }
+    
+    .card { 
+        width: 220px; 
+        height: 280px;
+        font-size: 1.4rem;
+    }
+    
+    .slider-controls { 
+        gap: 1.5rem;
+        margin-top: 2rem;
+    }
+
+    .slider-controls button {
+        width: 55px;
+        height: 55px;
+        font-size: 1.3rem;
+        border-width: 2px;
+    }
+    
+    /* CONTACTS MOBILE */
+    .contacts {
+        padding: 4rem 1.5rem;
+        min-height: 70vh;
+    }
+    
+    .contacts h2 {
+        margin-bottom: 2.5rem;
     }
 
     .contact-form {
         flex-direction: column;
         gap: 1.5rem;
+        padding: 1.5rem;
+        max-width: 100%;
+        width: 100%;
+    }
+    
+    .contact-form input,
+    .contact-form select {
+        padding: 1.2rem 0;
+        font-size: 1rem;
+    }
+    
+    .contact-form button {
+        padding: 1.2rem 2.5rem;
+        font-size: 1rem;
+        width: 100%;
+        margin-top: 0.5rem;
     }
 
     .contact-links {
         flex-direction: column;
         gap: 1rem;
+        width: 100%;
     }
-
-    .menu { 
-        width: 100%; 
-        padding: 4rem 2rem;
+    
+    .contact-link {
+        width: 100%;
+        justify-content: center;
+        padding: 1rem 1.5rem;
+        font-size: 1rem;
     }
-
-    .card { 
-        width: 200px; 
-        height: 300px; 
-    }
-
-    .slider-controls { 
-        gap: 1rem; 
-    }
-
-    .slider-controls button {
-        width: 50px;
-        height: 50px;
+    
+    /* FLOATING ELEMENTS MOBILE */
+    .floating-elements {
+        display: none; /* Remove elementos flutuantes no mobile */
     }
 }
 
 @media (max-width: 480px) {
-    .nav-container { padding: 0 1rem; }
-    .hero-content { left: 1rem; right: 1rem; width: calc(100% - 2rem); }
-    .hero, .about, .quick-work, .contacts { 
-        padding-left: 1rem; 
-        padding-right: 1rem; 
+    /* AJUSTES PARA TELAS MUITO PEQUENAS */
+    .nav-container { 
+        padding: 0 1rem; 
+        height: 70px;
     }
-    .contact-links { gap: 0.5rem; }
+    
+    .navbar {
+        height: 70px;
+    }
+    
+    .nav-logo {
+        font-size: 1.3rem;
+    }
+    
+    .hamburger-menu {
+        width: 32px;
+        height: 32px;
+    }
+    
+    .hamburger-line {
+        width: 20px;
+    }
+    
+    /* HERO EXTRA SMALL */
+    .hero {
+        padding: 1.5rem 1rem;
+    }
+    
+    .hero-content {
+        gap: 1.5rem;
+    }
+    
+    .hero .left {
+        font-size: clamp(1.6rem, 9vw, 2.8rem);
+        line-height: 1.1;
+    }
+    
+    .hero .right {
+        font-size: clamp(0.9rem, 4vw, 1.2rem);
+    }
+    
+    /* SECTIONS EXTRA SMALL */
+    .about, .quick-work, .contacts { 
+        padding: 3rem 1rem;
+    }
+    
+    .about-text {
+        font-size: clamp(1.1rem, 5vw, 1.8rem);
+        line-height: 1.3;
+    }
+    
+    .about-btn {
+        font-size: 1rem;
+        padding: 0.7rem 1.5rem;
+    }
+    
+    /* PORTFOLIO EXTRA SMALL */
+    .card { 
+        width: 180px; 
+        height: 240px;
+        font-size: 1.2rem;
+    }
+    
+    .card-slider {
+        height: 280px;
+    }
+    
+    .slider-controls button {
+        width: 50px;
+        height: 50px;
+        font-size: 1.2rem;
+    }
+    
+    /* CONTACTS EXTRA SMALL */
+    .contact-form {
+        padding: 1.2rem;
+        gap: 1.2rem;
+    }
+    
+    .contact-form input,
+    .contact-form select {
+        padding: 1rem 0;
+        font-size: 0.9rem;
+    }
+    
+    .contact-form button {
+        padding: 1rem 2rem;
+        font-size: 0.9rem;
+    }
+    
     .contact-link { 
-        padding: 0.8rem 1.5rem; 
-        font-size: 1rem; 
+        padding: 0.8rem 1.2rem; 
+        font-size: 0.9rem;
+    }
+    
+    /* MENU EXTRA SMALL */
+    .menu {
+        padding: 2rem 1rem;
+        padding-top: 5rem;
+    }
+    
+    .menu a {
+        font-size: 1.5rem;
+        padding: 1.2rem 0;
+    }
+}
+
+@media (max-width: 375px) {
+    /* AJUSTES PARA iPhone SE e similares */
+    .hero .left {
+        font-size: clamp(1.4rem, 10vw, 2.4rem);
+    }
+    
+    .about-text {
+        font-size: clamp(1rem, 5vw, 1.6rem);
+    }
+    
+    .card { 
+        width: 160px; 
+        height: 220px;
+        font-size: 1.1rem;
+    }
+    
+    .card-slider {
+        height: 260px;
     }
 }
 
@@ -1114,8 +1359,8 @@ window.addEventListener('load', () => {
     }, 1800);
 });
 
-// Cursor personalizado melhorado (apenas desktop)
-if (window.innerWidth > 768 && window.matchMedia('(hover: hover)').matches) {
+// Cursor personalizado melhorado (apenas desktop com hover real)
+if (window.innerWidth > 1024 && window.matchMedia('(hover: hover) and (pointer: fine)').matches) {
     const cursor = document.getElementById('cursor');
     const cursorFollower = document.getElementById('cursorFollower');
     const interactiveElements = document.querySelectorAll('.interactive-element, a, button, input, select');
@@ -1151,6 +1396,12 @@ if (window.innerWidth > 768 && window.matchMedia('(hover: hover)').matches) {
             cursorFollower.classList.remove('hover');
         });
     });
+} else {
+    // Remove cursor customizado em mobile/tablet
+    const cursor = document.getElementById('cursor');
+    const cursorFollower = document.getElementById('cursorFollower');
+    if (cursor) cursor.style.display = 'none';
+    if (cursorFollower) cursorFollower.style.display = 'none';
 }
 
 // Navbar com scroll otimizado
@@ -1241,7 +1492,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-// Portfolio slider melhorado
+// Portfolio slider melhorado com melhor suporte mobile
 const cards = document.querySelectorAll('.card');
 const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
@@ -1261,11 +1512,12 @@ function updateCards() {
         // Z-index para sobreposição correta
         card.style.zIndex = cards.length - absOffset;
         
-        // Transformações mais suaves
-        const translateX = offset * 150;
-        const translateZ = -absOffset * 100;
-        const scale = offset === 0 ? 1 : Math.max(0.65, 1 - absOffset * 0.15);
-        const rotateY = offset * 15;
+        // Ajustar transformações baseado no tamanho da tela
+        const isMobile = window.innerWidth <= 768;
+        const translateX = isMobile ? offset * 120 : offset * 150;
+        const translateZ = isMobile ? -absOffset * 60 : -absOffset * 100;
+        const scale = offset === 0 ? 1 : Math.max(isMobile ? 0.75 : 0.65, 1 - absOffset * 0.15);
+        const rotateY = isMobile ? offset * 8 : offset * 15;
         
         card.style.transform = `
             translateX(${translateX}px) 
@@ -1277,8 +1529,8 @@ function updateCards() {
         // Opacidade mais suave
         card.style.opacity = absOffset > 2 ? '0' : Math.max(0.2, 1 - absOffset * 0.25);
         
-        // Blur para cards distantes
-        card.style.filter = `blur(${absOffset * 2}px)`;
+        // Blur para cards distantes (menos intenso no mobile)
+        card.style.filter = `blur(${absOffset * (isMobile ? 1 : 2)}px)`;
     });
     
     setTimeout(() => {
@@ -1291,8 +1543,8 @@ function nextCard() {
         currentIndex = currentIndex < cards.length - 1 ? currentIndex + 1 : 0;
         updateCards();
         
-        // Feedback tátil
-        if (navigator.vibrate) {
+        // Feedback tátil apenas em mobile
+        if (navigator.vibrate && window.innerWidth <= 768) {
             navigator.vibrate(30);
         }
     }
@@ -1303,8 +1555,8 @@ function prevCard() {
         currentIndex = currentIndex > 0 ? currentIndex - 1 : cards.length - 1;
         updateCards();
         
-        // Feedback tátil
-        if (navigator.vibrate) {
+        // Feedback tátil apenas em mobile
+        if (navigator.vibrate && window.innerWidth <= 768) {
             navigator.vibrate(30);
         }
     }
@@ -1313,13 +1565,14 @@ function prevCard() {
 prevBtn.addEventListener('click', prevCard);
 nextBtn.addEventListener('click', nextCard);
 
-// Auto-rotate com controle inteligente
+// Auto-rotate com controle inteligente (mais lento no mobile)
 function startAutoRotate() {
+    const interval = window.innerWidth <= 768 ? 5000 : 4500;
     autoRotateInterval = setInterval(() => {
         if (!isTransitioning && !document.hidden) {
             nextCard();
         }
-    }, 4500);
+    }, interval);
 }
 
 function stopAutoRotate() {
@@ -1330,10 +1583,13 @@ function stopAutoRotate() {
 const cardSlider = document.querySelector('.card-slider');
 const sliderControls = document.querySelector('.slider-controls');
 
-[cardSlider, sliderControls].forEach(element => {
-    element.addEventListener('mouseenter', stopAutoRotate);
-    element.addEventListener('mouseleave', startAutoRotate);
-});
+// Apenas desktop tem hover
+if (window.matchMedia('(hover: hover)').matches) {
+    [cardSlider, sliderControls].forEach(element => {
+        element.addEventListener('mouseenter', stopAutoRotate);
+        element.addEventListener('mouseleave', startAutoRotate);
+    });
+}
 
 // Pausar quando tab não está ativa
 document.addEventListener('visibilitychange', () => {
@@ -1344,47 +1600,79 @@ document.addEventListener('visibilitychange', () => {
     }
 });
 
-// Navegação por teclado
-document.addEventListener('keydown', (e) => {
-    if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevCard();
-        stopAutoRotate();
-        setTimeout(startAutoRotate, 5000); // Reinicia após 5s
-    } else if (e.key === 'ArrowRight') {
-        e.preventDefault();
-        nextCard();
-        stopAutoRotate();
-        setTimeout(startAutoRotate, 5000);
-    }
-});
+// Navegação por teclado (apenas desktop)
+if (window.innerWidth > 768) {
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevCard();
+            stopAutoRotate();
+            setTimeout(startAutoRotate, 5000);
+        } else if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextCard();
+            stopAutoRotate();
+            setTimeout(startAutoRotate, 5000);
+        }
+    });
+}
 
-// Suporte a touch/swipe
+// Suporte a touch/swipe melhorado
 let startX = 0;
 let startY = 0;
 let threshold = 50;
+let isScrolling = false;
 
 cardSlider.addEventListener('touchstart', (e) => {
     startX = e.touches[0].clientX;
     startY = e.touches[0].clientY;
+    isScrolling = false;
     stopAutoRotate();
 }, { passive: true });
 
-cardSlider.addEventListener('touchend', (e) => {
-    const deltaX = e.changedTouches[0].clientX - startX;
-    const deltaY = e.changedTouches[0].clientY - startY;
+cardSlider.addEventListener('touchmove', (e) => {
+    if (!startX || !startY) return;
     
-    // Verifica se é um swipe horizontal
-    if (Math.abs(deltaX) > Math.abs(deltaY) && Math.abs(deltaX) > threshold) {
+    const deltaX = Math.abs(e.touches[0].clientX - startX);
+    const deltaY = Math.abs(e.touches[0].clientY - startY);
+    
+    // Detectar se é scroll vertical
+    if (deltaY > deltaX) {
+        isScrolling = true;
+    } else if (deltaX > 10) {
+        // Prevenir scroll se é um swipe horizontal
+        e.preventDefault();
+    }
+}, { passive: false });
+
+cardSlider.addEventListener('touchend', (e) => {
+    if (isScrolling) {
+        setTimeout(startAutoRotate, 2000);
+        return;
+    }
+    
+    const deltaX = e.changedTouches[0].clientX - startX;
+    const deltaY = Math.abs(e.changedTouches[0].clientY - startY);
+    
+    // Verifica se é um swipe horizontal válido
+    if (Math.abs(deltaX) > threshold && Math.abs(deltaX) > deltaY) {
         if (deltaX > 0) {
             prevCard();
         } else {
             nextCard();
         }
+        setTimeout(startAutoRotate, 4000);
+    } else {
+        setTimeout(startAutoRotate, 2000);
     }
-    
-    setTimeout(startAutoRotate, 3000);
 }, { passive: true });
+
+// Redimensionamento da janela
+window.addEventListener('resize', () => {
+    stopAutoRotate();
+    updateCards();
+    setTimeout(startAutoRotate, 1000);
+});
 
 // Inicializar cards e auto-rotate
 updateCards();
@@ -1436,18 +1724,26 @@ contactForm.addEventListener('submit', (e) => {
     }, 1200);
 });
 
-// Efeito parallax sutil no hero
+// Efeito parallax sutil no hero (otimizado para mobile)
+let parallaxTicking = false;
+
 window.addEventListener('scroll', () => {
-    const scrolled = window.pageYOffset;
-    const hero = document.querySelector('.hero');
-    const floatingElements = document.querySelector('.floating-elements');
-    
-    if (hero && scrolled < window.innerHeight) {
-        hero.style.transform = `translateY(${scrolled * 0.25}px)`;
-        
-        if (floatingElements) {
-            floatingElements.style.transform = `translateY(${scrolled * 0.15}px)`;
-        }
+    if (!parallaxTicking && window.innerWidth > 768) {
+        requestAnimationFrame(() => {
+            const scrolled = window.pageYOffset;
+            const hero = document.querySelector('.hero');
+            const floatingElements = document.querySelector('.floating-elements');
+            
+            if (hero && scrolled < window.innerHeight) {
+                hero.style.transform = `translateY(${scrolled * 0.25}px)`;
+                
+                if (floatingElements) {
+                    floatingElements.style.transform = `translateY(${scrolled * 0.15}px)`;
+                }
+            }
+            parallaxTicking = false;
+        });
+        parallaxTicking = true;
     }
 }, { passive: true });
 
